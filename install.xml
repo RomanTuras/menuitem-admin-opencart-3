@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+    <code>Additional items in admin ID</code>
+	<name>WebExchange, ExportYml items in admin panel</name>
+	<version>1.0</version>
+	<author>Turas RD</author>
+    <description>Showing custom items it the left menu admin panel</description>
+	<link>https://www.turasstudio.com/</link>
+	<file path="admin/controller/common/column_left.php">
+		<operation>
+			<search><![CDATA[
+				$this->load->model('sale/order');
+				]]></search>
+			<add position="before"><![CDATA[      
+
+			if ($this->user->hasPermission('access', 'setting/setting')) {
+				$children_items[] = array(
+					'name'	   => 'Web Exchange Module Page', //$this->language->get('text_tax_rate'),
+					'href'     => $this->url->link('extension/module/web_exchange', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()
+				);
+				$children_items[] = array(
+					'name'	   => 'Export Yml Module Page',
+					'href'     => $this->url->link('extension/module/export_yml', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()
+				);
+			}
+
+			$data['menus'][] = array(
+				'id'       => 'menu-report',
+				'icon'	   => 'fa-paw', 
+				'name'	   => 'Custom Menu',
+				'href'     => '',
+				'children' => $children_items
+			);
+				
+				]]></add>
+		</operation>		
+	</file>
+</modification>
